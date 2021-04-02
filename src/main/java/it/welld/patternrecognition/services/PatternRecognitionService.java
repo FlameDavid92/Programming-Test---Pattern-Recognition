@@ -15,6 +15,7 @@ import it.welld.patternrecognition.daos.StraightSlopedLineDAO;
 import it.welld.patternrecognition.dtos.LineDTO;
 import it.welld.patternrecognition.dtos.LinesDTO;
 import it.welld.patternrecognition.dtos.SpaceDTO;
+import it.welld.patternrecognition.exceptions.DuplicateException;
 
 @Service
 @CacheConfig(cacheNames= {"patternrecognition"})
@@ -53,7 +54,23 @@ public class PatternRecognitionService {
 	}
 	
 	@Caching(evict = { @CacheEvict(cacheNames="patternrecognition", allEntries=true) })
-	public void addPoint(PointDAO newPoint) {
+	public void addPoint(PointDAO newPoint) throws DuplicateException {
+		
+		if(space.contains(newPoint)) throw new DuplicateException();
+		
+		space.stream().forEach(p->{
+			if(!p.getX().equals(newPoint.getX()) && !p.getY().equals(newPoint.getY())) {
+				StraightSlopedLineDAO line = new StraightSlopedLineDAO(newPoint, p);
+				if(straightSlopedLines.containsKey(line)) {
+					straightSlopedLines.get(line).add(newPoint);
+				}else {
+					Set<PointDAO> newSet = new HashSet<>();
+					newSet.add(newPoint);
+					newSet.add(p);
+					straightSlopedLines.put(line, newSet);
+				}
+			}
+		});
 		
 		if(verticalLines.containsKey(newPoint.getX())) {
 			verticalLines.get(newPoint.getX()).add(newPoint);
@@ -71,19 +88,6 @@ public class PatternRecognitionService {
 			horizontalLines.put(newPoint.getY(), newSet);
 		}
 		
-		space.stream().forEach(p->{
-			if(!p.getX().equals(newPoint.getX()) && !p.getY().equals(newPoint.getY())) {
-				StraightSlopedLineDAO line = new StraightSlopedLineDAO(newPoint, p);
-				if(straightSlopedLines.containsKey(line)) {
-					straightSlopedLines.get(line).add(newPoint);
-				}else {
-					Set<PointDAO> newSet = new HashSet<>();
-					newSet.add(newPoint);
-					newSet.add(p);
-					straightSlopedLines.put(line, newSet);
-				}
-			}
-		});
 		space.add(newPoint);
 			
 	}

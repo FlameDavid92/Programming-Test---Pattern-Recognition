@@ -6,7 +6,6 @@ public class StraightSlopedLineDAO {
 	private Double yIntercept;
 	
 	public StraightSlopedLineDAO(PointDAO pt0, PointDAO pt1){
-	    if(pt0.equals(pt1)) throw new IllegalArgumentException("Cannot create straight line from two identical points");
 	    this.slope = (pt0.getY() - pt1.getY()) / (pt0.getX() - pt1.getX());
 	    this.yIntercept = pt0.getY() - this.slope * pt0.getX();
 	}

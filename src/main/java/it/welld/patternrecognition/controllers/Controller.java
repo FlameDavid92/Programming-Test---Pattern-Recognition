@@ -16,6 +16,7 @@ import it.welld.patternrecognition.dtos.SimpleResponse;
 import it.welld.patternrecognition.dtos.SpaceDTO;
 import it.welld.patternrecognition.exceptions.BindingException;
 import it.welld.patternrecognition.exceptions.DeleteException;
+import it.welld.patternrecognition.exceptions.DuplicateException;
 import it.welld.patternrecognition.services.PatternRecognitionService;
 
 @RestController
@@ -25,7 +26,7 @@ public class Controller {
 	PatternRecognitionService patternRecognitionService;
 	
 	@PostMapping(value = "/point")
-	public ResponseEntity<SimpleResponse> addPoint(@RequestBody PointDAO point) throws BindingException {
+	public ResponseEntity<SimpleResponse> addPoint(@RequestBody PointDAO point) throws BindingException, DuplicateException {
 		if(point.getX() == null || point.getY() == null){
 			throw new BindingException("Invalid content.");
 		}

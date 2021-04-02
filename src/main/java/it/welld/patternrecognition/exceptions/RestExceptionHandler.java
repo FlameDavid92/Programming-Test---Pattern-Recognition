@@ -19,8 +19,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(DeleteException.class)
-	public final ResponseEntity<SimpleResponse> exceptionDeleteHandler(Exception ex){
+	public final ResponseEntity<SimpleResponse> exceptionDeleteHandler(){
 		return new ResponseEntity<SimpleResponse>(new SimpleResponse(400, "Error while deleting."), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(DuplicateException.class)
+	public final ResponseEntity<SimpleResponse> exceptionDuplicateHandler(){
+		return new ResponseEntity<SimpleResponse>(new SimpleResponse(400, "Already added."), HttpStatus.BAD_REQUEST);
 	}
 	
 }
