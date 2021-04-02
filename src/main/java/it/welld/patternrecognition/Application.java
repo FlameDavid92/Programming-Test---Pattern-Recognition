@@ -1,13 +1,15 @@
-package it.welld.patternrecognition.PatternRecognition;
+package it.welld.patternrecognition;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-public class PatternRecognitionApplication {
+@EnableCaching
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PatternRecognitionApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

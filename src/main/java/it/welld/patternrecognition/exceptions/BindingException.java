@@ -1,4 +1,4 @@
-package it.welld.patternrecognition.PatternRecognition;
+package it.welld.patternrecognition.exceptions;
 
 public class BindingException extends Exception {
 

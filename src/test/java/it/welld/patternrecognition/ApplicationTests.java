@@ -1,10 +1,10 @@
-package it.welld.patternrecognition.PatternRecognition;
+package it.welld.patternrecognition;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PatternRecognitionApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

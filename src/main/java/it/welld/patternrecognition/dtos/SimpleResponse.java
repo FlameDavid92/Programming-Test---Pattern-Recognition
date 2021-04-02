@@ -1,4 +1,4 @@
-package it.welld.patternrecognition.PatternRecognition;
+package it.welld.patternrecognition.dtos;
 
 public class SimpleResponse {
 	private Integer code;

@@ -1,29 +1,25 @@
-package it.welld.patternrecognition.PatternRecognition;
+package it.welld.patternrecognition.daos;
 
-import javax.validation.constraints.NotNull;
-
-public class PointDTO {
-	@NotNull
-	private Long x;
-	@NotNull
-	private Long y;
+public class PointDAO {
+	private Double x;
+	private Double y;
 	
-	public PointDTO(Long x, Long y) {
+	public PointDAO(Double x, Double y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Long getX() {
+	public Double getX() {
 		return x;
 	}
-	public void setX(Long x) {
+	public void setX(Double x) {
 		this.x = x;
 	}
-	public Long getY() {
+	public Double getY() {
 		return y;
 	}
-	public void setY(Long y) {
+	public void setY(Double y) {
 		this.y = y;
 	}
 	
@@ -35,7 +31,7 @@ public class PointDTO {
 		result = prime * result + ((y == null) ? 0 : y.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -44,7 +40,7 @@ public class PointDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PointDTO other = (PointDTO) obj;
+		PointDAO other = (PointDAO) obj;
 		if (x == null) {
 			if (other.x != null)
 				return false;
@@ -57,10 +53,11 @@ public class PointDTO {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "PointDTO [x=" + x + ", y=" + y + "]";
+		return "PointDAO [x=" + x + ", y=" + y + "]";
 	}
 	
 }
+
