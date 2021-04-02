@@ -90,6 +90,34 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "LoadSpace",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"space\": [\r\n        {\r\n            \"x\": 1.0,\r\n            \"y\": 1.0\r\n        },\r\n        {\r\n            \"x\": 1.0,\r\n            \"y\": 2.0\r\n        },\r\n        {\r\n            \"x\": 2.0,\r\n            \"y\": 1.0\r\n        },\r\n        {\r\n            \"x\": 2.0,\r\n            \"y\": 2.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/loadspace",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"loadspace"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

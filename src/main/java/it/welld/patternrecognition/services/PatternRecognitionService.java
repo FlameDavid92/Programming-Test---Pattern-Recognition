@@ -99,4 +99,16 @@ public class PatternRecognitionService {
 		horizontalLines = new HashMap<>();
 		straightSlopedLines = new HashMap<>();
 	}
+	
+	@Caching(evict = { @CacheEvict(cacheNames="patternrecognition", allEntries=true) })
+	public void loadSpace(SpaceDTO newSpace) {
+		space = new HashSet<>();
+		newSpace.getSpace().forEach(point -> {
+			try {
+				addPoint(point);
+			} catch (DuplicateException e) {
+				//nothing
+			}
+		});
+	}
 }

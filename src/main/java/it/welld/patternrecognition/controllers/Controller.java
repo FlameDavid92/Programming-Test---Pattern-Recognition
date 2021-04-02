@@ -54,4 +54,11 @@ public class Controller {
 			throw new DeleteException();
 		}
 	}
+	
+	@PostMapping(value = "/loadspace")
+	public ResponseEntity<SimpleResponse> loadSpace(@RequestBody SpaceDTO space) throws BindingException {
+		if(space.getSpace() == null) throw new BindingException("Invalid content.");
+		patternRecognitionService.loadSpace(space);
+		return new ResponseEntity<SimpleResponse>(new SimpleResponse(201, "Space loaded."), HttpStatus.CREATED);
+	}
 }
