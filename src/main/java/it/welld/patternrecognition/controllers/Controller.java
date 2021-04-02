@@ -23,7 +23,7 @@ import it.welld.patternrecognition.services.PatternRecognitionService;
 public class Controller {
 	
 	@Autowired
-	PatternRecognitionService patternRecognitionService;
+	private PatternRecognitionService patternRecognitionService;
 	
 	@PostMapping(value = "/point")
 	public ResponseEntity<SimpleResponse> addPoint(@RequestBody PointDAO point) throws BindingException, DuplicateException {
@@ -57,7 +57,7 @@ public class Controller {
 	
 	@PostMapping(value = "/loadspace")
 	public ResponseEntity<SimpleResponse> loadSpace(@RequestBody SpaceDTO space) throws BindingException {
-		if(space.getSpace() == null) throw new BindingException("Invalid content.");
+		if(space.getSpace() == null || space.getSpace().size() == 0) throw new BindingException("Invalid content.");
 		patternRecognitionService.loadSpace(space);
 		return new ResponseEntity<SimpleResponse>(new SimpleResponse(201, "Space loaded."), HttpStatus.CREATED);
 	}
