@@ -47,7 +47,7 @@ IN MEMORIA
 
 Quando viene aggiunto un nuovo punto P:
 
-1) Per tutti i punti nello spazio che hanno sia la coordinata x che la y differenti da quelle di P:
+1) Per tutti i punti nel piano che hanno sia la coordinata x che la y differenti da quelle di P:
 
 - Si calcola slope s e yIntersect y dato P ed il punto Q attualmente preso in considerazione:
 
@@ -61,9 +61,9 @@ Quando viene aggiunto un nuovo punto P:
 
 4) Si aggiunge P allo spazio S.
 
---- La chiamata di cancellazione dello spazio aggiornerà  S ad insieme vuoto ed i tre dizionari V,O,SY a vuoti.
+--- La chiamata di cancellazione del piano aggiornerà  S ad insieme vuoto ed i tre dizionari V,O,SY a vuoti.
 
---- La chiamata di restituzione dello spazio restituirà S.
+--- La chiamata di restituzione del piano restituirà S.
 
 --- La chiamata di restituzione delle linee con almeno n punti restituirà:
 
@@ -71,3 +71,9 @@ Quando viene aggiunto un nuovo punto P:
 	- nessuna linea per n=0.
 	- tutte le linee (insiemi da almeno 2 elementi) presenti in SY, O, V per n=1
 	- tutte le linee con almeno n elementi presenti in SY,O,V per n>=2
+
+
+
+---Poiché non si utilizza persistenza dei dati, è stata aggiunta una chiamata POST a /loadspace che permette il caricamento di un piano precedentemente ottenuto tramite GET a /space.
+
+--- Come ulteriore ottimizzazione è stata abilitata la cache, questa viene pulita ad ogni nuovo inserimento di un punto (o di più punti se si carica un nuovo piano) o alla cancellazione di un piano.
