@@ -22,7 +22,7 @@ La REST API è stata sviluppata con SpringBoot versione 2.4.4.
 
 Alcune delle risposte di errore gestite contengono un body così formato: { "code":number, "message":string }
 
-ERRORI:
+### ERRORI:
 
 | METODO | URL                             | MESSAGGIO DI ERRORE            | DESCRIZIONE                                   |
 | ------ | ------------------------------- | ------------------------------ | --------------------------------------------- |
@@ -31,3 +31,43 @@ ERRORI:
 | GET    | http://localhost:8080/lines/{n} | 400 - Invalid number of points | Il numero "n" fornito è negativo              |
 | DELETE | http://localhost:8080/space     | 400 - Error while deleting.    | Errore durante l'eliminazione.                |
 | POST   | http://localhost:8080/loadspace | 400 - Invalid content          | Il body in request non rappresenta uno spazio |
+
+
+
+### DESCRIZIONE SOLUZIONE
+
+IN MEMORIA
+
+- Un insieme di punti S (space) che rappresenta il piano
+- Un dizionario V indicizzato dalla coordinata x che contiene le linee verticali
+- Un dizionario O indicizzato dalla coordinata y che contiene le linee orizzontali
+- Un dizionario SY indicizzato dalla coppia (slope, yIntersect) che contiene le linee con un coefficente angolare esistente e > 0.
+
+--- L'idea è quella di tenere aggiornati i vari insiemi ad ogni aggiunta di un nuovo punto.
+
+Quando viene aggiunto un nuovo punto P:
+
+1) Per tutti i punti nello spazio che hanno sia la coordinata x che la y differenti da quelle di P:
+
+- Si calcola slope s e yIntersect y dato P ed il punto Q attualmente preso in considerazione:
+
+   - Se la coppia calcolata (s,y) è già presente in SY allora si aggiunge P alla linea rappresentata da (s,y)
+
+   - Altrimenti si aggiunge a SY la nuova chiave (s,y) che indicizza una nuova linea contente P e Q
+
+2) Se la coordinata x xp di P è presente come chiave in V allora si aggiunge alla linea verticale indicizzata da xp il punto P, altrimenti si crea una nuova chiave xp per V che indicizza un nuovo insieme contente P. (ATT. finché l'insieme ha un solo elemento non conta come linea).
+
+3)  Se la coordinata y yp di P è presente come chiave in O allora si aggiunge alla linea orizzontale indicizzata da yp il punto P, altrimenti si crea una nuova chiave yp per O che indicizza un nuovo insieme contente P. (ATT. finché l'insieme ha un solo elemento non conta come linea).
+
+4) Si aggiunge P allo spazio S.
+
+--- La chiamata di cancellazione dello spazio aggiornerà  S ad insieme vuoto ed i tre dizionari V,O,SY a vuoti.
+
+--- La chiamata di restituzione dello spazio restituirà S.
+
+--- La chiamata di restituzione delle linee con almeno n punti restituirà:
+
+	- errore per n<0.
+	- nessuna linea per n=0.
+	- tutte le linee (insiemi da almeno 2 elementi) presenti in SY, O, V per n=1
+	- tutte le linee con almeno n elementi presenti in SY,O,V per n>=2
